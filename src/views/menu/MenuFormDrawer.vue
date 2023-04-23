@@ -13,8 +13,23 @@
       <el-form-item :label="$t('parentMenu')" prop="parent_id">
         <menu-cascader v-model="form.parent_id" :guard-name="form.guard_name"></menu-cascader>
       </el-form-item>
-      <el-form-item :label="$t('permission')" prop="permission_name">
-        <el-input v-model="form.permission_name"></el-input>
+      <el-form-item :label="$t('permission')" prop="permission_list">
+          <el-select
+              v-model="form.permission_list"
+              multiple
+              filterable
+              allow-create
+              default-first-option
+              :reserve-keyword="false"
+              placeholder="添加权限"
+          >
+          <el-option
+                  v-for="item in form.permission_list"
+                  :key="item"
+                  :label="item"
+                  :value="item"
+          />
+          </el-select>
       </el-form-item>
       <el-form-item :label="$t('icon')" prop="icon">
         <el-input v-model="form.icon">
@@ -37,12 +52,10 @@
 <script setup>
 import CustomScrollDrawer from '@/components/Drawer/CustomScrollDrawer.vue'
 import GuardSelect from '@/components/Select/GuardSelect.vue'
-import PermissionGroupSelect from '@/components/Select/PermissionGroupSelect.vue'
 import MenuCascader from '@/components/Cascader/MenuCascader.vue'
 import { ref, watch } from 'vue'
 import { addMenu, editMenu } from '@/api/menu'
 import notice from '@/utils/notice'
-import { More } from '@element-plus/icons-vue'
 import SelectIconPopover from './SelectIconPopover.vue'
 
 const props = defineProps({
@@ -67,7 +80,7 @@ const actionType = ref(props.action)
 let defualtForm = {
   name: null,
   uri: null,
-  permission_name: null,
+  permission_list: [],
   guard_name: null,
   parent_id: null,
   icon: null,
@@ -96,12 +109,13 @@ watch(() => props.row, (row) => {
   form.value = {
     name: row.name,
     uri: row.uri,
-    permission_name: row.permission_name,
+    permission_list: row.permission_list,
     guard_name: row.guard_name,
     parent_id: row.parent_id,
     icon: row.icon,
     sequence: row.sequence,
   }
+    console.log(form.value)
 })
 
 const handleAdd = () => {
@@ -127,12 +141,11 @@ const handleEdit = () => {
       drawer.value = false
       props.row.name = form.value.name
       props.row.uri = form.value.uri
-      props.row.permission_name = form.value.permission_name
+      props.row.permission_list = form.value.permission_list
       props.row.guard_name = form.value.guard_name
       props.row.parent_id = form.value.parent_id
       props.row.icon = form.value.icon
       props.row.sequence = form.value.sequence
-      //form.value = defualtForm
     })
   })
 }

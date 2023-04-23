@@ -18,7 +18,7 @@ export default defineConfig(({ command }) => {
     },
     plugins: [
       vue(),
-      mock(command, prodMock),
+      // mock(command, prodMock),
       AutoImport({
         resolvers: [ElementPlusResolver()],
       }),
