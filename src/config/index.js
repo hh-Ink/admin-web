@@ -22,7 +22,7 @@ export default {
 
   dashboardFullPath: '/dashboard',
 
-  fullName: 'Mojito Admin',
+  fullName: 'Msmm Admin',
 
-  abbrName: 'Mojito'
+  abbrName: 'Msmm'
 }
