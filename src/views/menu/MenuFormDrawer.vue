@@ -115,7 +115,6 @@ watch(() => props.row, (row) => {
     icon: row.icon,
     sequence: row.sequence,
   }
-    console.log(form.value)
 })
 
 const handleAdd = () => {
